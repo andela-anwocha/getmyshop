@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "orders/create"
+
 
   # Example resource route
   # (maps HTTP verbs to controller actions automatically):
@@ -25,6 +25,19 @@ Rails.application.routes.draw do
   get "/cart/delete-all", to: "carts#delete_all", as: :empty_cart
   get "/cart/delete/:id", to: "carts#delete_item", as: :delete_order_item
   post "/cart/update/:id", to: "carts#update_item", as: :update_order_item
+  
+
+  scope controller: :shopowners do
+    get "/:shop_owner_id/shops/new", to: "shops#new",
+        as: "shop_new"
+
+    get "/:shop_owner_id/admin/dashboard", to: "shops#show",
+          as: "dashboard"
+
+    post "/shops", to: "shops#create", as: "shop_creation"
+  end
+
+  
 
   scope controller: :landing do
     get "/contact"  => :contact
@@ -60,6 +73,15 @@ Rails.application.routes.draw do
       )
     end
   end
+
+  resources :shop_owners do
+    collection do
+      get("/activate/:shop_owner_id/:activation_token",
+        to: "users#shop_owner_activate",
+        as: "activate")
+    end
+  end
+
 
   resources :orders, only: [] do
     collection do

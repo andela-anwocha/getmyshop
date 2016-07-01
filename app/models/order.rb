@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   has_many :order_items, dependent: :destroy
   belongs_to :address
-  belongs_to :user
+  belongs_to :regular_user
   before_create :build_order_number
 
   accepts_nested_attributes_for :order_items

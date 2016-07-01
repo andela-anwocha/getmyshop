@@ -9,7 +9,7 @@ FactoryGirl.define do
     city Faker::Address.city
     country Faker::Address.country
 
-    user factory: :regular_user
+    regular_user
 
     factory :address_with_orders do
       transient do

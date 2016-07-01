@@ -50,6 +50,7 @@
             <div class="submit-div center">
               <%= f.submit "Create Account", class: "btn signup", id: "submit-signup", disabled: "disabled"%>
             </div>
+            <%= f.hidden_field :create_shop_owner, value: true %>
           <% end %>
           <p class="comments  center">Got an account? Please
         <%= link_to "Sign In", login_path %>.

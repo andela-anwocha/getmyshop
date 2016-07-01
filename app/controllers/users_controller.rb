@@ -46,8 +46,43 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = RegularUser.new(users_params)
+    if create_shop_owner?
+      create_shop_owner
+    else
+      create_regular_user
+    end
+  end
 
+  def activate
+    user = User.token_match(params[:user_id], params[:activation_token]).first
+    redirect_path = root_path
+    activate_user(user, redirect_path)
+  end
+
+  def shop_owner_activate
+    shop_owner = ShopOwner.token_match(params[:shop_owner_id], params[:activation_token]).first
+    redirect_path = shop_new_path(shop_owner)
+    activate_user(shop_owner, redirect_path)
+  end
+
+  private
+
+  def create_shop_owner?
+    params[:user][:create_shop_owner]
+  end
+
+  def activate_user(user, redirect_path)
+    if user && user.update(active_status: true)
+      session[:user_id] = user.id
+      redirect_to redirect_path, notice: "Account activated successfully."
+    else
+      redirect_to redirect_path, notice: "Unable to activate account. "\
+      "If you copied the link, make sure you copied it correctly."
+    end
+  end
+
+  def create_regular_user
+    @user = RegularUser.new(users_params)
     if @user.save
       UserMailer.welcome(@user.id, "Welcome To GetMyShop").deliver_now
       session[:user_id] = @user.id
@@ -59,17 +94,21 @@ class UsersController < ApplicationController
     end
   end
 
-  def activate
-    user = User.token_match(params[:user_id], params[:activation_token]).first
-
-    if user && user.update(active_status: true)
-      session[:user_id] = user.id
-      redirect_to root_path, notice: "Account activated successfully."
+  def create_shop_owner
+    @shop_owner = ShopOwner.new(users_params)
+    if @shop_owner.save
+      UserMailer.welcome_shop_owner(@shop_owner.id, "Welcome To GetMyShop")
+        .deliver_now
+      session[:user_id] = @shop_owner.id
+      redirect_to root_path, notice: "Welcome, #{@shop_owner.first_name}"
     else
-      redirect_to root_path, notice: "Unable to activate account. "\
-      "If you copied the link, make sure you copied it correctly."
+      flash["errors"] = @shop_owner.errors.full_messages
+      flash["user"] = @shop_owner
+      redirect_to :back
     end
   end
+
+  
 
   def account
   end

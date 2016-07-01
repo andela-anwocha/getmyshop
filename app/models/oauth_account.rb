@@ -1,3 +1,3 @@
 class OauthAccount < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :regular_user
 end

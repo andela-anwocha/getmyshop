@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
-  subject { build(:order) }
+  subject{ build(:order) }
 
   describe "has a valid factory" do
     it { is_expected.to be_valid }
@@ -18,14 +18,14 @@ RSpec.describe Order, type: :model do
       it { is_expected.to respond_to(:order_number) }
       it { is_expected.to respond_to(:payment_method) }
       it { is_expected.to respond_to(:total_amount) }
-      it { is_expected.to respond_to(:user_id) }
+      it { is_expected.to respond_to(:regular_user_id) }
       it { is_expected.to respond_to(:address_id) }
     end
   end
 
   describe "ActiveModel Relation" do
     it { is_expected.to have_many(:order_items) }
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:regular_user) }
     it { is_expected.to belong_to(:address) }
   end
 

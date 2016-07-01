@@ -3,7 +3,9 @@ require "rails_helper"
 RSpec.describe Category, type: :model do
   context "When initializing a category" do
     it "is successful when all arguments are correct" do
+      binding.pry
       category = create(:category_with_products)
+
       expect(category).to be_valid
     end
 

@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   has_many :reviews
   belongs_to :subcategory
   has_one :category, through: :subcategory
+  belongs_to :shop
 
   before_create :generate_code
 

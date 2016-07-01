@@ -1,0 +1,36 @@
+<div class="row" style="margin-top: 100px;">
+
+  <%= form_tag shop_creation_path, method: "post", class: "col s8 offset-s2 z-depth-2" do %>
+
+    <%= label_tag :name, "First Name" %>
+    <%= text_field_tag :name, nil, placeholder: "Shop Name" %>
+
+
+    <%= label_tag :url, "Url" %>
+    <%= text_field_tag :url, nil, placeholder: "Url" %>
+
+
+    <%= label_tag :description, "Description" %>
+    <%= text_field_tag :description, nil, placeholder: "E.g Offers Phones" %>
+
+    <%= label_tag :address, "Address" %>
+    <%= text_field_tag :address, nil, placeholder: "E.g Los Angeles" %>
+
+    <%= label_tag :city, "City" %>
+    <%= text_field_tag :city, nil, placeholder: "E.g New York" %>
+
+    <%= label_tag :state, "State" %>
+    <%= text_field_tag :state, nil, placeholder: "E.g Lagos" %>
+
+     <%= label_tag :country, "Country" %>
+    <%= text_field_tag :country, nil, placeholder: "E.g Nigeria" %>
+
+    <%= label_tag :phone, "Phone Number" %>
+    <%= text_field_tag :phone, nil, placeholder: "(+234) 74460478" %>
+
+    <%= hidden_field_tag :shop_owner_id, @shop_owner.id %>
+
+    <%= submit_tag "Create Account", class: "ui basic blue button" %>
+  <% end %>
+
+</div>

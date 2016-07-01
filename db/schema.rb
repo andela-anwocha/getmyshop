@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427144943) do
+ActiveRecord::Schema.define(version: 20160629040855) do
 
   create_table "addresses", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "name"
     t.string   "email"
     t.string   "address"
@@ -24,11 +23,12 @@ ActiveRecord::Schema.define(version: 20160427144943) do
     t.string   "state"
     t.string   "city"
     t.string   "country"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "regular_user_id"
   end
 
-  add_index "addresses", ["user_id"], name: "index_addresses_on_user_id"
+  add_index "addresses", ["regular_user_id"], name: "index_addresses_on_regular_user_id"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 20160427144943) do
     t.string   "oauth_secret"
     t.string   "oauth_token"
     t.datetime "oauth_expires"
-    t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "regular_user_id"
   end
 
-  add_index "oauth_accounts", ["user_id"], name: "index_oauth_accounts_on_user_id"
+  add_index "oauth_accounts", ["regular_user_id"], name: "index_oauth_accounts_on_regular_user_id"
 
   create_table "order_items", force: :cascade do |t|
     t.integer  "order_id"
@@ -64,8 +64,7 @@ ActiveRecord::Schema.define(version: 20160427144943) do
   create_table "orders", force: :cascade do |t|
     t.string   "order_number"
     t.string   "payment_method"
-    t.decimal  "total_amount"
-    t.integer  "user_id"
+    t.string   "total_amount"
     t.integer  "address_id"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
@@ -73,11 +72,20 @@ ActiveRecord::Schema.define(version: 20160427144943) do
     t.string   "status",              default: "Pending"
     t.string   "transaction_id"
     t.datetime "purchased_at"
+    t.integer  "regular_user_id"
   end
 
   add_index "orders", ["address_id"], name: "index_orders_on_address_id"
   add_index "orders", ["order_number"], name: "index_orders_on_order_number"
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
+  add_index "orders", ["regular_user_id"], name: "index_orders_on_regular_user_id"
+
+  create_table "passwords", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "my_id"
+    t.string   "email"
+    t.string   "code"
+  end
 
   create_table "product_image_links", force: :cascade do |t|
     t.string   "link_name"
@@ -99,8 +107,10 @@ ActiveRecord::Schema.define(version: 20160427144943) do
     t.string   "size"
     t.integer  "subcategory_id"
     t.integer  "price"
+    t.integer  "shop_id"
   end
 
+  add_index "products", ["shop_id"], name: "index_products_on_shop_id"
   add_index "products", ["subcategory_id"], name: "index_products_on_subcategory_id"
 
   create_table "reviews", force: :cascade do |t|
@@ -115,6 +125,23 @@ ActiveRecord::Schema.define(version: 20160427144943) do
 
   add_index "reviews", ["product_id"], name: "index_reviews_on_product_id"
   add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
+
+  create_table "shops", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "description"
+    t.string   "string"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "phone"
+    t.integer  "shop_owner_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "shops", ["shop_owner_id"], name: "index_shops_on_shop_owner_id"
 
   create_table "specifications", force: :cascade do |t|
     t.string   "key"
@@ -147,6 +174,7 @@ ActiveRecord::Schema.define(version: 20160427144943) do
     t.boolean  "active_status",    default: false
     t.string   "reset_code"
     t.boolean  "active",           default: true
+    t.string   "type"
   end
 
   create_table "wishlists", force: :cascade do |t|

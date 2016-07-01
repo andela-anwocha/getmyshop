@@ -1,5 +1,5 @@
 class Address < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :regular_user
   has_many :orders
 
   validates :name, :address, :phone, :state, :city, presence: true

@@ -7,7 +7,7 @@ RSpec.describe OrdersController::OrderStatus do
 
   describe "#new" do
     it "should be an instance of order" do
-      order_status = OrdersController::OrderStatus.new(@order.user)
+      order_status = OrdersController::OrderStatus.new(@order.regular_user)
       expect(order_status).to be_instance_of(OrdersController::OrderStatus)
     end
   end
@@ -23,7 +23,7 @@ RSpec.describe OrdersController::OrderStatus do
         time = (4...12).to_a.sample
         new_order.created_at = Time.now - time.hour
         new_order.save
-        result = OrdersController::OrderStatus.new(new_order.user).save
+        result = OrdersController::OrderStatus.new(new_order.regular_user).save
         expect(result[0].status).to eql("Shipped")
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe OrdersController::OrderStatus do
         time = (12...24).to_a.sample
         new_order.created_at = Time.now - time.hour
         new_order.save
-        result = OrdersController::OrderStatus.new(new_order.user).save
+        result = OrdersController::OrderStatus.new(new_order.regular_user).save
         expect(result[0].status).to eql("Delivered")
       end
     end

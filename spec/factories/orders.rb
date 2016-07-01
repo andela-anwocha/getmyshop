@@ -3,7 +3,7 @@ FactoryGirl.define do
     order_number Faker::Number.number(10).to_s
     payment_method ["pay-on-delivery", "paypal", "getmyshop-pay"].sample
     total_amount Faker::Commerce.price
-    user factory: :regular_user
+    regular_user
     address factory: :address
 
     factory :order_with_items do
