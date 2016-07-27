@@ -1,14 +1,127 @@
 <div class="col s4 m3">
   <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <%= image_tag product.image.preview.url, class: "activator" %>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><%= product.name %><i class="material-icons right">more_vert</i></span>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"><%= product.name %><i class="material-icons right">close</i></span>
-      <p><%= product.description %></p>
+    <div class="card hoverable">
+      <div class="card-image">
+        <%= image_tag product.image.preview.url%>
+        <span class="card-title"><%= product.name %></span>
+      </div>
+      <div class="card-content">
+        <p><%= product.description %></p>
+      </div>
+      <div class="card-action">
+        <div style="margin-left: 130px">
+          <a class="btn btn-floating green tooltipped" data-position="top" data-delay="50" data-tooltip="Preview Product"><i class="material-icons">visibility</i></a>
+          <a class="btn-floating yellow tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Product"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating red tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Product"><i class="material-icons">delete</i></a>
+        </div>
+      </div>
     </div>
   </div>    
+</div>
+
+<div class="col s4 m3">
+  <div class="card">
+    <div class="card hoverable">
+      <div class="card-image">
+        <%= image_tag product.image.preview.url%>
+        <span class="card-title"><%= product.name %></span>
+      </div>
+      <div class="card-content">
+        <p><%= product.description %></p>
+      </div>
+      <div class="card-action">
+        <div style="margin-left: 130px">
+          <a class="btn btn-floating green tooltipped" data-position="top" data-delay="50" data-tooltip="Preview Product"><i class="material-icons">visibility</i></a>
+          <a class="btn-floating yellow tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Product"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating red tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Product"><i class="material-icons">delete</i></a>
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
+<div class="col s4 m3">
+  <div class="card">
+    <div class="card hoverable">
+      <div class="card-image">
+        <%= image_tag product.image.preview.url%>
+        <span class="card-title"><%= product.name %></span>
+      </div>
+      <div class="card-content">
+        <p><%= product.description %></p>
+      </div>
+      <div class="card-action">
+        <div style="margin-left: 130px">
+          <a class="btn btn-floating green tooltipped" data-position="top" data-delay="50" data-tooltip="Preview Product"><i class="material-icons">visibility</i></a>
+          <a class="btn-floating yellow tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Product"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating red tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Product"><i class="material-icons">delete</i></a>
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px; ">
+  <a class="btn-floating btn-large yellow tooltipped" data-position="top" data-delay="50" data-tooltip="Add Product" href="#modal1">
+    <i class="large material-icons">add</i>
+  </a>
+</div>
+
+
+ <div id="modal1" class="modal modal-fixed-footer">
+  <%= form_for( "/", html: { multipart: true } ) do |f| %>
+    <div class="modal-content">
+      <h4>Add Product</h4>
+      
+      <% if flash[:errors] %>
+        <div id="error_explanation">
+          <ul>
+          <% flash[:errors].each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, { required: true } %>
+      </div>
+
+      <div class="field">
+        <%= f.label :description %><br>
+        <%= f.text_field :description, { required: true }  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :quantity %><br>
+        <%= f.text_field :quantity, { required: true }  %>
+      </div>
+
+      <div class="field">
+        <%= f.label :brand %><br>
+        <%= f.text_field :brand, { required: true } %>
+      </div>
+
+      <div class="field">
+        <%= f.label :size %><br>
+        <%= f.text_field :size, { required: true } %>
+      </div>
+
+      <div class="field">
+        <%= f.label :price %><br>
+        <%= f.text_field :price, { required: true } %>
+      </div>
+
+      <div class="field">
+        <%= f.label :image %><br>
+        <%= f.file_field :image %>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <%= f.submit class: "waves-effect waves-green btn-flat " %>
+    </div>
+  <% end %>
 </div>

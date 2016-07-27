@@ -250,13 +250,22 @@ hr {
   font-size: 1.4em !important;
 }
 
-.card {
+.card-title{
+  color: black !important;
+}
+.card{
   width: 300px;
-  height: 200px;
-  .card-image {
-    display: inline-block;
-    height: 130px;
-    width: 100%;
+  height: auto;
+  .card-image{
+    height: 200px;
+    width: 300px;
   }
 }
 
+.card-image img{
+  height: 100%;
+}
+
+a.btn-floating.btn-large.yellow {
+  background-color: #FFC107 !important;
+}
