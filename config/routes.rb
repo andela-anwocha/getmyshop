@@ -102,6 +102,7 @@ Rails.application.routes.draw do
         get "/confirmation"   => :confirmation, as: :confirmation
         get "/past_orders"    => :past_orders, as: :past
         post "/:id"           => :show
+        put "/" => :update
         delete "/:id"         => :destroy, as: :order_cancel
       end
     end

@@ -7,10 +7,14 @@ require "spec_helper"
 require "rspec/rails"
 require "capybara/rspec"
 require "capybara/rails"
-require "database_cleaner"
+# require "database_cleaner"
 require "transactional_capybara/rspec"
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -19,29 +23,29 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
   config.include FactoryGirl::Syntax::Methods
+  config.include TransactionalCapybara::AjaxHelpers
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    DatabaseCleaner.strategy = :transaction
-    begin
-      FactoryGirl.lint
-      DatabaseCleaner.clean_with(:truncation)
-    rescue
-      DatabaseCleaner.clean_with(:truncation)
-    end
-  end
+ 
 
-  config.after(:each, js: true) do
-    TransactionalCapybara::AjaxHelpers.wait_for_ajax(page)
-  end
+  # config.before(:each) do
+  #   DatabaseCleaner.start
+  # end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
+  # config.after(:each) do
+  #   DatabaseCleaner.clean
+  # end
 
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  # config.before(:suite) do
+  #   DatabaseCleaner.clean_with(:truncation)
+  #   DatabaseCleaner.strategy = :transaction
+  #   begin
+  #     FactoryGirl.lint
+  #     DatabaseCleaner.clean_with(:truncation)
+  #   rescue
+  #     DatabaseCleaner.clean_with(:truncation)
+  #   end
+  # end
+
 end
 
 Shoulda::Matchers.configure do |config|

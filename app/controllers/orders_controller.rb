@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   include CheckLoginConcern
-  before_action :check_login, except: [:paypal_hook]
+  before_action :check_login, except: [:paypal_hook, :update]
+  before_action :allow_params, only: :update
   protect_from_forgery except: [:paypal_hook]
 
   def address
@@ -101,6 +102,12 @@ class OrdersController < ApplicationController
     )
   end
 
+  def update
+    orders = params.require(:orders)
+    Order.update(orders.keys, orders.values)
+    render json: { notice: "Updated" }, status: 200
+  end
+
   def past_orders
     OrderStatus.new(current_user).save
     @past_orders = current_user.orders
@@ -130,5 +137,11 @@ class OrdersController < ApplicationController
       flash[:error] = "Order cancelled"
       redirect_to "/orders/past_orders"
     end
+  end
+
+  private
+
+  def allow_params
+    params.permit!
   end
 end

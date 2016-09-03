@@ -3,10 +3,12 @@ SimpleCov.start
 require "coveralls"
 Coveralls.wear!("rails")
 require "factory_girl_rails"
+require "support/database_cleaner"
 require "support/form_helpers"
 require "support/login_helper"
 require "capybara"
 require "omniauth"
+
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

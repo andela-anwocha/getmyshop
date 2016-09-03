@@ -31,7 +31,6 @@ gem "figaro"
 gem "carrierwave", "~> 0.10.0"
 gem "mini_magick", "~> 4.3"
 gem "jquery-fileupload-rails"
-gem "font-awesome-sass"
 gem "pry-rails"
 
 group :development, :test do
@@ -48,6 +47,7 @@ group :development, :test do
   gem "shoulda-matchers", "~> 3.1"
   gem "transactional_capybara"
   gem "chromedriver-helper"
+  gem 'transactional_capybara'
 end
 
 group :production do
